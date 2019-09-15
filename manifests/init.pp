@@ -1,5 +1,5 @@
 class netcentric_1 (
-	$domain		= 'example.com',
+	$domain		= 'domain.com',
 	$fwd_port	= '443',
 	$ssl_cert	= '/etc/nginx/ssl/nginx.crt',
 	$ssl_key	= '/etc/nginx/ssl/nginx.key',
@@ -46,7 +46,7 @@ class netcentric_1 (
 		mode		=> '0644'
 	}
 
-	nginx::resource::server{'domain.com':
+	nginx::resource::server{$domain:
 		listen_port	=> 443,
 		proxy		=> 'http://10.10.10.10:80',
 		ssl		=> true,
@@ -63,7 +63,7 @@ class netcentric_1 (
 	}
 
 	nginx::resource::location{'/health':
-		proxy		=> 'http://20.20.20.20:80/' ,
+		proxy		=> 'http://20.20.20.20:80/health' ,
 		server		=> 'domain.com',
 		ssl_only        => true,
 		ssl		=> true,
