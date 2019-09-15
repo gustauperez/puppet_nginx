@@ -1,0 +1,1 @@
+## Puppet nginx configuration
