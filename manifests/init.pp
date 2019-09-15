@@ -57,7 +57,7 @@ class netcentric_1 (
 
 	nginx::resource::location{'/resource2':
 		proxy		=> 'http://20.20.20.20:80/' ,
-		server		=> 'domain.com',
+		server		=> $domain,
 		ssl_only        => true,
 		ssl		=> true,
 	}
