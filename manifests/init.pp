@@ -46,9 +46,21 @@ class netcentric_1 (
 		mode		=> '0644'
 	}
 
+	nginx::resource::upstream { 'domain':
+		ensure  => present,
+		members => {
+			'10.10.10.10:80' => {
+				server 		=> '10.10.10.10',
+				port   		=> 80,
+				max_fails	=> 3,
+				fail_timeout	=> '30s',
+			}
+		},
+	}
+
 	nginx::resource::server{$domain:
 		listen_port	=> 443,
-		proxy		=> 'http://10.10.10.10:80',
+		proxy		=> 'http://domain',
 		ssl		=> true,
 		ssl_cert	=> $ssl_cert,
 		ssl_key		=> $ssl_key,
