@@ -58,6 +58,18 @@ class netcentric_1 (
 		},
 	}
 
+	nginx::resource::upstream { 'resource2':
+		ensure  => present,
+		members => {
+			'20.20.20.20.80' => {
+				server 		=> '20.20.20.20',
+				port   		=> 80,
+				max_fails	=> 3,
+				fail_timeout	=> '30s',
+			}
+		},
+	}
+
 	nginx::resource::server{$domain:
 		listen_port	=> $fwd_port,
 		proxy		=> 'http://domain',
@@ -68,10 +80,10 @@ class netcentric_1 (
 	}
 
 	nginx::resource::location{'/resource2':
-		proxy		=> 'http://20.20.20.20:80/' ,
+		proxy		=> 'http://resource2',
 		server		=> $domain,
-		ssl_only        => true,
-		ssl		=> true,
+		ssl_only    => true,
+		ssl 		=> true,
 	}
 
 	nginx::resource::location{'/health':
