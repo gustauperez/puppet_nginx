@@ -59,7 +59,7 @@ class netcentric_1 (
 	}
 
 	nginx::resource::server{$domain:
-		listen_port	=> 443,
+		listen_port	=> $fwd_port,
 		proxy		=> 'http://domain',
 		ssl		=> true,
 		ssl_cert	=> $ssl_cert,
